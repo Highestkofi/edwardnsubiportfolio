@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edward Nsubi | IT Professional & AI Governance Advocate</title>
+    <link rel="icon" type="image/png" href="/images/your-photo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Bradley Hand ITC';
+            src: local('Bradley Hand ITC'), local('Bradley Hand');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e3a5f;
+            --primary-dark: #0f2a4a;
+            --secondary: #2d5a8c;
+            --accent: #3a7ca5;
+            --dark: #0a1829;
+            --gray: #4a5568;
+            --light: #f1f5f9;
+            --white: #ffffff;
+            --gradient-1: linear-gradient(135deg, #1e3a5f 0%, #3a7ca5 100%);
+            --gradient-2: linear-gradient(135deg, #2d5a8c 0%, #4a90c4 100%);
+            --gradient-3: linear-gradient(135deg, #0f2a4a 0%, #2d5a8c 100%);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Bradley Hand ITC', cursive;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-shadow: 2px 2px 4px rgba(30, 58, 95, 0.1);
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 140px 0 80px;
+            background: linear-gradient(135deg, #1e3a5f20 0%, #3a7ca520 50%, #2d5a8c20 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(30, 58, 95, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(58, 124, 165, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 15s infinite ease-in-out reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, 50px) scale(1.1); }
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-family: 'Bradley Hand ITC', cursive;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .hero p {
+            color: var(--gray);
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .profile-img {
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(30, 58, 95, 0.3);
+            margin: 0 auto;
+            position: relative;
+            border: 5px solid white;
+            animation: profileFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes profileFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-img::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: 0 10px 30px rgba(30, 58, 95, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(30, 58, 95, 0.4);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: white;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Badge Pills */
+        .badge-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .badge {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .badge-ai {
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        .badge-freelance {
+            background: var(--gradient-2);
+            color: white;
+        }
+
+        .badge-governance {
+            background: var(--gradient-3);
+            color: white;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        section:nth-child(even) {
+            background: var(--light);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            text-align: center;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-1);
+            border-radius: 2px;
+        }
+
+        /* Experience Cards */
+        .experience-grid {
+            display: grid;
+            gap: 30px;
+        }
+
+        .experience-card {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.4s;
+            border-left: 5px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .experience-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .experience-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .org-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .org-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .experience-card h3 {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .company {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .date {
+            color: var(--gray);
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .experience-card p {
+            color: var(--gray);
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            background: white;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .profile-image-large {
+            width: 100%;
+            max-width: 450px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(30, 58, 95, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .profile-image-large img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .profile-image-large::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: var(--gradient-1);
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* Education & Certifications */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border-top: 4px solid var(--primary);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+        }
+
+        .card:hover::before {
+            opacity: 0.05;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--dark);
+            position: relative;
+            z-index: 1;
+        }
+
+        .card .institution {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card .date {
+            color: var(--gray);
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cert-badge {
+            width: 100%;
+            max-width: 200px;
+            margin: 15px auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 25px;
+        }
+
+        .skill-item {
+            text-align: center;
+            padding: 30px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+
+        .skill-item:hover::before {
+            opacity: 0.1;
+        }
+
+        .skill-item i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .skill-item p {
+            font-weight: 600;
+            color: var(--dark);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 20px;
+            align-items: start;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.4s;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+            font-size: 1.3rem;
+        }
+
+        .contact-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .contact-item p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .contact-item a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item a:hover {
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 0 25px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Bradley Hand ITC', cursive;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px) scale(1.1);
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 100;
+        }
+
+        .whatsapp-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 24px;
+            background: #25D366;
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.5);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 100px;
+            right: 25px;
+            z-index: 99;
+            background: var(--gradient-1);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(30, 58, 95, 0.3);
+            transition: all 0.3s;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(30, 58, 95, 0.4);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 25px 30px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-logo {
+            max-width: 100px;
+            max-height: 100px;
+            object-fit: contain;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+        }
+
+        .modal-body {
+            padding: 20px 30px 30px;
+        }
+
+        .modal-body h3 {
+            font-size: 1.4rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .modal-body .company {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .modal-body .date {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-body p {
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .certificate-image {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-content,
+            .profile-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .profile-image-large {
+                margin: 0 auto;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .badge-container,
+            .cta-buttons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .logo {
+                font-size: 1.6rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .profile-img {
+                width: 250px;
+                height: 250px;
+            }
+
+            .experience-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .date {
+                white-space: normal;
+            }
+
+            .modal-content {
+                max-width: 95%;
+            }
+        }
+        /* Horizontal Logo Layout */
+.logos-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.logo-item {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.logo-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 8px;
+    padding: 10px;
+    background: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.logo-item:hover img {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 25px rgba(30, 58, 95, 0.2);
+}
+
+.logo-tooltip {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.logo-item:hover .logo-tooltip {
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .logos-container {
+        gap: 1.5rem;
+    }
+    
+    .logo-item img {
+        width: 60px;
+        height: 60px;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" role="progressbar" aria-label="Loading content">
+        <div class="loader"></div>
+        <div class="loading-text">Loading Portfolio...</div>
+    </div>
+
+    <!-- Header -->
+    <header role="banner">
+        <div class="container">
+            <nav role="navigation" aria-label="Main navigation">
+                <div class="logo" aria-label="Edward Nsubi">Edward Nsubi</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section id="home" class="hero" role="main">
+        <div class="container">
+            <div class="hero-content">
+                <div>
+                    <h1>Edward Nsubi</h1>
+                    <p class="subtitle">IT Professional | AI Governance Advocate | Digital Transformation Specialist</p>
+                    
+                    <div class="badge-container">
+                        <span class="badge badge-ai">
+                            <i class="fas fa-robot"></i> AI & Machine Learning
+                        </span>
+                        <span class="badge badge-freelance">
+                            <i class="fas fa-laptop-code"></i> Available for Projects
+                        </span>
+                        <span class="badge badge-governance">
+                            <i class="fas fa-shield-alt"></i> AI Governance
+                        </span>
+                    </div>
+
+                    <p>A results-driven IT professional with expertise in AI governance, cybersecurity, and digital infrastructure. My recent role at the National Communications Authority provided me with deep insights into ICT regulation and spectrum management, fueling my passion for leveraging emerging technologies to build secure, innovative, and inclusive digital ecosystems.</p>
+                    
+                    <div class="cta-buttons">
+                        <a href="#experience" class="btn btn-primary">
+                            <i class="fas fa-briefcase"></i> View Experience
+                        </a>
+                        <a href="#contact" class="btn btn-outline">
+                            <i class="fas fa-envelope"></i> Get in Touch
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <div class="profile-img">
+                        <img src="images/your-photo.JPG" alt="Edward Nsubi - Professional portrait">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="profile-section">
+        <div class="container">
+            <h2>Professional Profile</h2>
+            <div class="profile-grid">
+                <div class="profile-image-large">
+                    <img src="images/your-photo-2.jpg" alt="Edward Nsubi - Professional photo">
+                </div>
+                <div>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--gray); margin-bottom: 25px;">
+                        As an IT professional with a background in Information Technology from Ghana Communication Technology University, I specialize in bridging the gap between technical innovation and regulatory compliance. My experience spans spectrum monitoring, ICT regulation, and AI governance, with a focus on developing frameworks that ensure responsible technology adoption.
+                    </p>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--gray); margin-bottom: 25px;">
+                        At the National Communications Authority, I contributed to regulatory enforcement and compliance monitoring, gaining valuable insights into telecommunications policy and spectrum management. This experience, combined with my technical expertise, positions me to address complex challenges at the intersection of technology, policy, and social impact.
+                    </p>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--gray);">
+                        Beyond my professional work, I serve as Assistant Finance Secretary for the BHOBU 2020 Year Group and founded the Highest Love Charity Initiative, demonstrating my commitment to community development and sustainable growth aligned with UN SDGs 1 (No Poverty) and 4 (Quality Education).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience -->
+    <!-- Experience -->
+<section id="experience">
+    <div class="container">
+        <h2>Professional Experience</h2>
+        <div class="logos-container">
+            <div class="logo-item" data-modal="nca-modal">
+                <img src="images/NCA-Logo.png" alt="National Communications Authority">
+                <span class="logo-tooltip">National Communications Authority</span>
+            </div>
+            <div class="logo-item" data-modal="hlc-modal">
+                <img src="images/hlc.png" alt="Highest Love Charity Initiative">
+                <span class="logo-tooltip">Highest Love Charity Initiative</span>
+            </div>
+            <div class="logo-item" data-modal="ghs-modal">
+                <img src="images/ghs logo.png" alt="Ghana Health Service">
+                <span class="logo-tooltip">Ghana Health Service</span>
+            </div>
+            <div class="logo-item" data-modal="golydew-modal">
+                <img src="images/golydew.png" alt="Edgod Enterprise">
+                <span class="logo-tooltip">Edgod Enterprise</span>
+            </div>
+            <div class="logo-item" data-modal="bhobu-modal">
+                <img src="images/bhobu20.png" alt="Bishop Herman Old Boys Union">
+                <span class="logo-tooltip">Bishop Herman Old Boys Union</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Skills -->
+    <section id="skills">
+        <div class="container">
+            <h2>Core Competencies</h2>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <i class="fas fa-robot"></i>
+                    <p>AI & Machine Learning</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <p>AI Governance</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-lock"></i>
+                    <p>Cybersecurity</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-satellite"></i>
+                    <p>Spectrum Management</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-network-wired"></i>
+                    <p>Network Administration</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-chart-line"></i>
+                    <p>Business Management</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-globe"></i>
+                    <p>SDG Implementation</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-gavel"></i>
+                    <p>Patent Law</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-laptop-code"></i>
+                    <p>IT Systems</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-users"></i>
+                    <p>Team Leadership</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" style="background: var(--light);">
+        <div class="container">
+            <h2>Contact Information</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <h3>Location</h3>
+                        <p>Accra, Ghana</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div>
+                        <h3>Phone</h3>
+                        <p><a href="tel:+233559432694">+233 559 432 694</a></p>
+                        <p><a href="tel:+233200783006">+233 200 783 006</a></p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <h3>Email</h3>
+                        <p><a href="mailto:ensubi@aol.com">ensubi@aol.com</a></p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fab fa-linkedin"></i>
+                    </div>
+                    <div>
+                        <h3>LinkedIn</h3>
+                        <p><a href="https://linkedin.com/in/edward-nsubi-0a1645346" target="_blank" rel="noopener noreferrer">edward-nsubi-0a1645346</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="container">
+            <div class="footer-logo">Edward Nsubi</div>
+            <div class="social-links">
+                <a href="https://linkedin.com/in/edward-nsubi-0a1645346" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://twitter.com" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Twitter Profile">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="mailto:ensubi@aol.com" class="social-link" aria-label="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+            <p style="color: var(--gray);">&copy; 2025 Edward Nsubi. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/233559432694" class="whatsapp-btn" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+            <span>Chat with me</span>
+        </a>
+    </div>
+
+    <!-- Back to Top Button -->
+    <a href="#home" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- Experience Modals -->
+    <div id="nca-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="images/NCA-Logo.png" alt="National Communications Authority logo" class="modal-logo">
+                <button class="close-modal" aria-label="Close modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3>National Service Person</h3>
+                <p class="company">National Communications Authority | Head Office</p>
+                <p class="date">Oct 2024 - Aug 2025</p>
+                <p>During my national service at the National Communications Authority, I contributed to regulatory enforcement for FM and TV broadcasting operations across Greater Accra, Eastern, and Central Regions. My responsibilities included:</p>
+                <ul>
+                    <li>Collaborating with engineers to enhance monitoring processes and procedures</li>
+                    <li>Assisting in license management and renewals for broadcasting stations</li>
+                    <li>Conducting technical signal measurements using Audimat analyzer to ensure compliance with broadcasting standards</li>
+                    <li>Supporting spectrum monitoring activities and reporting</li>
+                    <li>Participating in regulatory compliance inspections and assessments</li>
+                </ul>
+                <p>This experience provided me with valuable insights into telecommunications regulation and spectrum management, strengthening my understanding of ICT policy frameworks.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="hlc-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="images/hlc.png" alt="Highest Love Charity Initiative logo" class="modal-logo">
+                <button class="close-modal" aria-label="Close modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3>Founder & Director</h3>
+                <p class="company">Highest Love Charity Initiative</p>
+                <p class="date">Dec 2022 - Present</p>
+                <p>As the founder and director of the Highest Love Charity Initiative, I established and lead a community development organization focused on addressing UN Sustainable Development Goals 1 (No Poverty) and 4 (Quality Education). Key achievements include:</p>
+                <ul>
+                    <li>Organizing multiple relief efforts distributing food, cash, and essential items to vulnerable communities</li>
+                    <li>Providing educational materials and support to academically gifted but financially disadvantaged students</li>
+                    <li>Developing partnerships with local businesses and community leaders to maximize impact</li>
+                    <li>Creating sustainable programs that address both immediate needs and long-term development</li>
+                    <li>Establishing transparent reporting and accountability mechanisms for donor funds</li>
+                </ul>
+                <p>This initiative reflects my commitment to social impact and community development beyond my professional technology work.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="ghs-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="images/ghs logo.png" alt="Ghana Health Service logo" class="modal-logo">
+                <button class="close-modal" aria-label="Close modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3>IT Intern</h3>
+                <p class="company">Ghana Health Service | Ho Municipal Hospital</p>
+                <p class="date">Nov 2023 - Dec 2023</p>
+                <p>During my internship at Ho Municipal Hospital, I gained hands-on experience in healthcare IT systems and support:</p>
+                <ul>
+                    <li>Managed patient information using the Lightwave Health Information Management System (LHIMS)</li>
+                    <li>Provided technical support and training to hospital staff on system functionality and best practices</li>
+                    <li>Performed routine system checks to identify and resolve software issues proactively</li>
+                    <li>Contributed to improved operational efficiency within the hospital's IT infrastructure</li>
+                    <li>Assisted in data backup and recovery procedures to ensure system reliability</li>
+                </ul>
+                <p>This experience enhanced my technical support skills and provided insight into IT applications in healthcare settings.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="golydew-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="images/golydew.png" alt="Edgod Enterprise - Goly Dew logo" class="modal-logo">
+                <button class="close-modal" aria-label="Close modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3>Manager</h3>
+                <p class="company">Edgod Enterprise Limited | Goly Dew Natural Mineral Water</p>
+                <p class="date">Dec 2022 - Feb 2023</p>
+                <p>As Manager at Edgod Enterprise, I oversaw operations for Goly Dew Natural Mineral Water production and distribution:</p>
+                <ul>
+                    <li>Managed daily operations ensuring efficient production and distribution processes</li>
+                    <li>Maintained compliance with Food and Drugs Authority standards and regulations</li>
+                    <li>Cultivated and managed relationships with suppliers, distributors, and customers</li>
+                    <li>Directed budgeting, financial planning, and cost control initiatives</li>
+                    <li>Implemented quality control measures to maintain product standards</li>
+                    <li>Developed marketing strategies to increase brand visibility and market share</li>
+                </ul>
+                <p>This role developed my business management skills and provided experience in operational leadership.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="bhobu-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="images/bhobu20.png" alt="Bishop Herman Old Boys Union logo" class="modal-logo">
+                <button class="close-modal" aria-label="Close modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3>Assistant Finance Secretary</h3>
+                <p class="company">Bishop Herman Old Boys Union 2020 Year Batch</p>
+                <p class="date">Aug 2024 - Present</p>
+                <p>In my role as Assistant Finance Secretary for the BHOBU 2020 Year Group, I contribute to the financial management of our alumni association:</p>
+                <ul>
+                    <li>Assist in managing financial records and transactions for the association</li>
+                    <li>Support budgeting and financial planning activities for union events and initiatives</li>
+                    <li>Collaborate with executive committee members to ensure transparent financial reporting</li>
+                    <li>Help coordinate fundraising activities and manage donation records</li>
+                    <li>Participate in strategic planning for alumni engagement and development</li>
+                </ul>
+                <p>This voluntary position allows me to give back to my alma mater while developing financial management and leadership skills.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Certification Modals -->
+    <div id="ai-cert-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Complete A.I and Machine Learning, Data Science Bootcamp</h3>
+                <button class="close-modal" aria-label="Close modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="institution">Udemy</p>
+                <img src="images/ai-cert.png" alt="AI and Machine Learning Certificate" class="certificate-image">
+                <p>This comprehensive bootcamp covered fundamental and advanced concepts in artificial intelligence, machine learning, and data science. The curriculum included:</p>
+                <ul>
+                    <li>Python programming for data science and AI applications</li>
+                    <li>Machine learning algorithms and model development</li>
+                    <li>Neural networks and deep learning architectures</li>
+                    <li>Data preprocessing, visualization, and analysis techniques</li>
+                    <li>Real-world AI project implementation and deployment</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="spectrum-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Introduction to Spectrum Management</h3>
+                <button class="close-modal" aria-label="Close modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="institution">International Telecommunications Union Academy</p>
+                <img src="images/spectrum-cert.png" alt="Spectrum Management Certificate" class="certificate-image">
+                <p>This certification provided foundational knowledge in radio frequency spectrum management, including:</p>
+                <ul>
+                    <li>Principles of spectrum allocation and assignment</li>
+                    <li>International regulatory frameworks and standards</li>
+                    <li>Spectrum monitoring and enforcement techniques</li>
+                    <li>Emerging trends in spectrum utilization</li>
+                    <li>Coordination between different spectrum users</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add similar modals for other certifications -->
+
+    <script>
+        // Loading Screen
+        window.addEventListener('load', () => {
+            const loadingScreen = document.getElementById('loading-screen');
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+            }, 1500);
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            const isExpanded = navLinks.classList.contains('active');
+            navLinks.classList.toggle('active');
+            hamburger.setAttribute('aria-expanded', !isExpanded);
+        });
+
+        // Close menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Smooth scroll with offset for fixed header
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.experience-card, .card, .skill-item, .contact-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Header shadow on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const backToTop = document.querySelector('.back-to-top');
+            
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.15)';
+                backToTop.classList.add('visible');
+            } else {
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.08)';
+                backToTop.classList.remove('visible');
+            }
+        });
+
+       // Update modal triggers for the new logo layout
+const logoItems = document.querySelectorAll('.logo-item');
+
+logoItems.forEach(item => {
+    item.addEventListener('click', () => {
+        const modalId = item.getAttribute('data-modal');
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    });
+});
+
+// Keep your existing modal close functionality
+const modals = document.querySelectorAll('.modal');
+const closeButtons = document.querySelectorAll('.close-modal');
+
+closeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const modal = button.closest('.modal');
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    });
+});
+
+modals.forEach(modal => {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        modals.forEach(modal => {
+            if (modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
+});
+    </script>
+</body>
+</html>
